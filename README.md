@@ -1,8 +1,8 @@
-# uno_crop: a crop row detection package
+# crop.row.finder: a crop row detection package
 
 ## Introduction
 
-uno_crop is a package developed to identify crop rows from a drone image. It uses techniques such as: **ExG** color transformation, **Otsu Transformation**, and **morphology**.
+crop.row.finder is a package developed to identify crop rows from a drone image. It uses techniques such as: **ExG** color transformation, **Otsu Transformation**, and **morphology**.
 
 ## Workflow
 
