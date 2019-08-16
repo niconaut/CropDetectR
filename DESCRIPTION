@@ -1,0 +1,28 @@
+Package: crop.row.finder
+Title: Crop Row Finder
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Nicolaas",
+           family = "VanSteenbergen",
+           role = c("aut", "cre"),
+           email = "nvansteenbergen@unomaha.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+Depends: R (>= 3.1.0)
+License: What license it uses
+BugReports: https://github.com/niconaut
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    imager,
+    magick,
+    ggplot2,
+    reshape2,
+    EBImage
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
