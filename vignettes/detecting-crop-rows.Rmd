@@ -5,7 +5,7 @@ date: "'r Sys.Date()'"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{detecting-crop-rows}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\Vigdenitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r}
+# devtools::load_all()
 library(crop.row.finder)
 library(imager)
 library(magick)

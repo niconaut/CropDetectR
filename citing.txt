@@ -1,0 +1,21 @@
+ExG : Excess green (ExG) index (Woebbecke et al., 1995)
+
+Woebbecke et al., 1995
+    D.M. Woebbecke, G.E. Meyer, K. Von Bargen, D.A. Mortensen
+    Color indices for weed identification under various soil, residue, and lighting conditions
+    Transactions of the ASAE, 38 (1) (1995), pp. 259-269
+
+Otsu: (Otsu, 1975), https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4310076
+
+Otsu, 1975
+    N. Otsu
+    A threshold selection method from gray-level histograms
+    Automatica, 11 (285–296) (1975), pp. 23-27
+
+
+
+
+morphology: Open: https://en.wikipedia.org/wiki/Opening_(morphology)
+	    Close: https://en.wikipedia.org/wiki/Closing_(morphology)
+ 	    Erosion: https://en.wikipedia.org/wiki/Erosion_(morphology)
+	    Dilation: https://en.wikipedia.org/wiki/Dilation_(morphology)
