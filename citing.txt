@@ -13,6 +13,18 @@ Otsu, 1975
     Automatica, 11 (285–296) (1975), pp. 23-27
 
 
+Inspiration from: Determination of crop rows by image analysis without segmentation
+H.T.Søgaard, H.J.Olsen
+https://www-sciencedirect-com.leo.lib.unomaha.edu/science/article/pii/S0168169902001400
+
+Automatic detection of crop rows based on multi-ROIs
+GuoquanJiang, ZhihengWang, HongminLiu
+https://www-sciencedirect-com.leo.lib.unomaha.edu/science/article/pii/S0957417414006575#b0145
+
+Real-time image processing for crop/weed discrimination in maize fields
+Xavier P. Burgos-Artizzua, Angela Ribeiroa, Maria Guijarrob, Gonzalo Pajaresb
+https://www-sciencedirect-com.leo.lib.unomaha.edu/science/article/pii/S0168169910002620
+
 
 
 morphology: Open: https://en.wikipedia.org/wiki/Opening_(morphology)
