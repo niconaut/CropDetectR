@@ -6,7 +6,7 @@ crop.row.finder is a package developed to identify crop rows from a drone image.
 
 ## Workflow
 
-A color image of crop rows is first transformed into a grayscale image using *ExG* [1], then made binary using the *Otsu Transformation* [2]. The binary image is then modified using morphology [3] to best isolate crop row centers and remove all unwanted noise (leaves, grass patches, weeds).
+A color image of crop rows is first transformed into a grayscale image using *ExG*[1], then made binary using the *Otsu Transformation*[2]. The binary image is then modified using morphology[3] to best isolate crop row centers and remove all unwanted noise (leaves, grass patches, weeds).
 
 Once modified to an acceptable level, the image is rotated to find the degree of rotation that gives the most vertical crop rows. Crop rows need to be vertical so when taking the average of each column (value between [0,1]), high value columns can be identified as crop rows.
 
