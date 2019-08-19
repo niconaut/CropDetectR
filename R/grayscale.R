@@ -1,6 +1,6 @@
 #' Converts a color image into a grayscale image using ExG methodology.
 #'
-#' \code{make_ExG} uses the Excessive Green (ExG) methodology\url{} to create a grayscale image of crop rows. The image is first broken down into a dataframe and each pixel is tested then put onto a varying intensity according to the ExG.
+#' Uses the Excessive Green (ExG) methodology to create a grayscale image of crop rows. The image is first broken down into a dataframe and each pixel is tested then put onto a varying intensity according to the ExG.
 #'
 #' The function first reads the image as a data frame with x and y columns for the pixel postion. Reading the data frame as \code{wide = "c"} also creates a column for red, green, and blue intensity. Each color column is then normalized and the normal values of the colors are put into the ExG equation, creating a new ExG column for each pixel. The values of the ExG are then treated as a 1D array and transformed into a format for the EBImage package commands.
 #'
@@ -9,10 +9,9 @@
 #' @return An image formatted for EBImage commands.
 #'
 #' @example
-#'
-#' \dontrun{grayscale <- make_ExG(crop_rows)}
-#'
-#' @aliases make_grayscale ExG
+#' \donttest{
+#' grayscale <- make_ExG(crop_rows)
+#' }
 #'
 #' @export
 

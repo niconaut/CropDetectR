@@ -1,8 +1,8 @@
 #' Maps out the crop rows of the image (of a maize field)
 #'
-#' \code{crop_row_finder} finds the x coordinates of the crop rows in the image.
+#' Finds the x coordinates of the crop rows in the image.
 #'
-#' This function is a combination of two previous functions \code{\link{}} and \code{\link{}} to find the best rotation and then map out the x coordinates of the crop rows in the image.
+#' This function is a combination of two previous functions \code{\link{best_rotation}} and \code{\link{crop_lines}} to find the best rotation and then map out the x coordinates of the crop rows in the image.
 #'
 #' @param picture_list The list of rotated images originally from a single image.
 #'
@@ -15,8 +15,9 @@
 #' @return a list of x coordinates for the image on which the function was applied.
 #'
 #' @example
-#'
-#' \dontrun{crop_rows <- crop_row_finder(picture_list, ratio, final_ratio, intensity)}
+#' \donttest{
+#' crop_rows <- crop_row_finder(picture_list, ratio, final_ratio, intensity)
+#' }
 #'
 #' @export
 

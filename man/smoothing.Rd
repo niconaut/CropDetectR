@@ -2,10 +2,6 @@
 % Please edit documentation in R/smoothing.R
 \name{smoothing}
 \alias{smoothing}
-\alias{smooth_vector}
-\alias{smooth_image}
-\alias{make_smooth}
-\alias{smoothen}
 \title{Smooth the average of binary picture column values}
 \usage{
 smoothing(picture, intensity)
@@ -19,8 +15,5 @@ smoothing(picture, intensity)
 A smoothed vector.
 }
 \description{
-\code{smoothing} reads in an image and takes the average column value then smooths the array for more defined local maximas and minimas.
-}
-\details{
-The function reads in an image as a data frame then takes the mean of each column within the picture. Since the image is binary the mean will have a value between [0,1], with one being all white. It then uses \code{\link{}} smooth.spline to get rid of jagged portions for more defined local maximas and minimas.
+Reads in an image and takes the average column value then smooths the array for more defined local maximas and minimas.
 }

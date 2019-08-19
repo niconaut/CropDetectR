@@ -2,8 +2,6 @@
 % Please edit documentation in R/best_rotation.R
 \name{best_rotation}
 \alias{best_rotation}
-\alias{best_image}
-\alias{best_picture}
 \title{Find the best rotated image for crop row detection}
 \usage{
 best_rotation(picture_list, ratio, intensity)
@@ -19,13 +17,13 @@ best_rotation(picture_list, ratio, intensity)
 The index of the image with the most \emph{good ratios} (ratios that exceed the given threshold).
 }
 \description{
-\code{best_rotation} analyzes the list of rotated images of crop rows and finds the best angle of rotation for row detection.
+Analyzes the list of rotated images of crop rows and finds the best angle of rotation for row detection.
 }
 \details{
 This takes in a list of images and looks at the average of each column in the form of an arry.
 Ideally the image is black and white, with crops being white, so the range of numbers in the array {0,1}.
 
-The function then smooths out the array using \code{\link{smoothing}} so the local minima and maximas using \code{\link{local}} are more pronounced,
+The function then smooths out the array using \code{\link{smoothing}} so the local minima and maximas using (\code{\link{localMaxima}} and \code{\link{localMaxima}}) are more pronounced,
 then creates two vectors of the local min/max of each image.
 Then the ratio between neighbor local minima and maxima are calculated and compared to
 a threshold given by the user. If the found ratio is larger than the threshold the ratio

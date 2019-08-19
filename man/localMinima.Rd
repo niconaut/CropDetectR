@@ -2,10 +2,6 @@
 % Please edit documentation in R/max_and_min.R
 \name{localMinima}
 \alias{localMinima}
-\alias{local_minima}
-\alias{local_mins}
-\alias{local_min}
-\alias{minimums}
 \title{Finds local minima of a vector}
 \usage{
 localMinima(x)
@@ -15,9 +11,7 @@ localMinima(x)
 }
 \value{
 A list of local minimas in the vector
-
-\dontrun{minimas <- localMinima(smoothed_vector)}
 }
 \description{
-This takes in a vector and finds the local minimas (credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
+Takes in a vector and finds the local minimas.  (Credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
 }

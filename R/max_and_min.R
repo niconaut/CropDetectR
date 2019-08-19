@@ -1,16 +1,15 @@
 #' Finds local maxima of a vector
 #'
-#' This takes in a vector and finds the local maximas (credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
+#' Takes in a vector and finds the local maximas.  (Credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
 #'
 #' @param x A 1D array or vector
 #'
 #' @return A list of local maximas in the vector
 #'
-#' @examples
-#'
-#' \dontrun{maximas <- localMaxima(smoothed_vector)}
-#'
-#' @aliases local_maxima local_max local_maxes maximums
+#' @example
+#' \donttest{
+#' maximas <- localMaxima(smoothed_vector)
+#' }
 #'
 #' @export
 
@@ -28,15 +27,16 @@ localMaxima <- function(x) {
 
 #' Finds local minima of a vector
 #'
-#' This takes in a vector and finds the local minimas (credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
+#' Takes in a vector and finds the local minimas.  (Credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
 #'
 #' @param x Any vector
 #'
 #' @return A list of local minimas in the vector
 #'
-#' \dontrun{minimas <- localMinima(smoothed_vector)}
-#'
-#' @aliases local_minima local_mins local_min minimums
+#' @example
+#' \donttest{
+#' minimas <- localMinima(smoothed_vector)
+#' }
 #'
 #' @export
 

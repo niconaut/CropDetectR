@@ -1,8 +1,8 @@
 #' Find crop lines of an image
 #'
-#' \code{crop_lines} finds the crop row lines of an image. It uses other functions in the package such as: \code{\link{}}, \code{\link{}}, \code{\link{}}, and \code{\link{}}.
+#' Finds the crop row lines of an image. It uses other functions in the package such as: \code{\link{smoothing}}, \code{\link{localMaxima}}, and \code{\link{localMinima}}.
 #'
-#' This function takes in: one or more images, a ratio that will become the threshold of what qualifies as a crop row, the index from \code{\link{}} of what the best image was, and the intensity of smoothening from \code{\link{}}. It then uses the ratio as the threshold for acceptable crop rows and makes a list of the x-axis values.
+#' This function takes in: one or more images, a ratio that will become the threshold of what qualifies as a crop row, the index from \code{\link{best_rotation}} of what the best image was, and the intensity of smoothening from \code{\link{smoothing}}. It then uses the ratio as the threshold for acceptable crop rows and makes a list of the x-axis values.
 #'
 #' @param picture_list One or more images created from rotating the same image.
 #'
@@ -15,8 +15,9 @@
 #' @return A vector of x-axis values for a given image.
 #'
 #' @example
-#'
-#' \dontrun{crop_positions <- crop_lines(picture_list, 0.5, best_image, 0.25)}
+#' \donttest{
+#' crop_positions <- crop_lines(picture_list, 0.5, best_image, 0.25)
+#' }
 #'
 #' @export
 

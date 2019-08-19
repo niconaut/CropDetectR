@@ -13,7 +13,9 @@ Otsu, 1975
     Automatica, 11 (285–296) (1975), pp. 23-27
 
 
-Inspiration from: Determination of crop rows by image analysis without segmentation
+Inspiration from: 
+
+Determination of crop rows by image analysis without segmentation
 H.T.Søgaard, H.J.Olsen
 https://www-sciencedirect-com.leo.lib.unomaha.edu/science/article/pii/S0168169902001400
 

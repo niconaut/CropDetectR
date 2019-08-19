@@ -2,7 +2,6 @@
 % Please edit documentation in R/otsu.R
 \name{make_bw}
 \alias{make_bw}
-\alias{otsu}
 \title{Changes a grayscale image to black and white}
 \usage{
 make_bw(image)
@@ -15,7 +14,4 @@ A binary image
 }
 \description{
 Takes in a grayscale image and finds the best threshold for binarization of the image.
-}
-\details{
-This function uses the \code{\link{}} otsu function from EBImage to make the grayscale image into a binary black and white image. How the otsu transformation works and chooses the threshold can be understood more clearly at \code{\url{}}.
 }

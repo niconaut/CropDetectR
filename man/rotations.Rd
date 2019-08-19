@@ -2,8 +2,6 @@
 % Please edit documentation in R/rotations.R
 \name{rotations}
 \alias{rotations}
-\alias{rotate_image}
-\alias{rotate}
 \title{Rotates an image by x degrees}
 \usage{
 rotations(picture, degrees)
@@ -17,7 +15,7 @@ rotations(picture, degrees)
 A list of pictures that have been rotated by x degrees each.
 }
 \description{
-\code{rotations} takes an image and rotates it by a number of degrees choosen by the user.
+Takes an image and rotates it by a number of degrees choosen by the user.
 }
 \details{
 The function takes in an image and rotates it by a number of degrees chosen by the user. It will keep rotating until it has reached the 360 degree limit and save the images into a list.

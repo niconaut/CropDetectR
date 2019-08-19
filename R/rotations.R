@@ -1,6 +1,6 @@
 #' Rotates an image by x degrees
 #'
-#' \code{rotations} takes an image and rotates it by a number of degrees choosen by the user.
+#' Takes an image and rotates it by a number of degrees choosen by the user.
 #'
 #' The function takes in an image and rotates it by a number of degrees chosen by the user. It will keep rotating until it has reached the 360 degree limit and save the images into a list.
 #'
@@ -11,10 +11,9 @@
 #' @return A list of pictures that have been rotated by x degrees each.
 #'
 #' @example
-#'
-#' \dontrun{picture_list <- rotations(picture, 45)}
-#'
-#' @aliases rotate_image rotate
+#' \donttest{
+#' picture_list <- rotations(picture, 45)
+#' }
 #'
 #' @export
 

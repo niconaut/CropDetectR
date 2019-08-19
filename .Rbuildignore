@@ -1,2 +1,5 @@
 ^crop\.row\.finder\.Rproj$
 ^\.Rproj\.user$
+images
+citing.txt
+^LICENSE\.md$
