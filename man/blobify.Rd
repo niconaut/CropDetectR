@@ -4,12 +4,12 @@
 \alias{blobify}
 \title{Denoise a black and white image to only core features}
 \usage{
-blobify(images, size)
+blobify(image, size)
 }
 \arguments{
-\item{images}{One, or more, image(s).}
+\item{image}{An image.}
 
-\item{size}{A number, the starting size of the kernel for morphology (minimum of 2).}
+\item{size}{An odd number, the starting size of the kernel for morphology (minimum of 3).}
 }
 \description{
 This takes a black and white image, preferrably the image produced by an otsu transformation, and gets rid of all extrenuous features. Many long skinny features and random clumps of features will be erased, leaving only the larger core features of an image.

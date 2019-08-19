@@ -1,7 +1,7 @@
 ---
 title: "detecting-crop-rows"
 author: "Nicolaas VanSteenbergen"
-date: "'r Sys.Date()'"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{detecting-crop-rows}
@@ -18,8 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
-devtools::load_all()
+```{r, message=F, warning=F}
 library(crop.row.finder)
 library(imager)
 library(magick)
@@ -54,21 +53,22 @@ black_white <- make_bw(img_grayscale)
 plot(black_white)
 ```
 
-Using the Otsu method of image thresholding we are able to capture only the plant material as white (value of 1) and the rest of the non-organic material is black (value of 0). This will be very benficial for the next steps because a binary image is needed. For more on how the Otsu transformation works check out (...) and (...).
+Using the Otsu method of image thresholding we are able to capture only the plant material as white (value of 1) and the rest of the non-organic material is black (value of 0). This will be very benficial for the next steps because a binary image is needed.
 
 # Morphology
 
 ```{r}
-img_blob <- blobify(black_white, 3)
+img_blob <- blobify(black_white, 3) # min input value of 1
 
 plot(img_blob)
 ```
 
-Through the use of morphology we have only kept the important parts of the crop rows and erased all the extrenuous leaves and weeds. By using opening (...) and closing (...) techniques we were able to have a simpler more concentrated image of our crop rows.
+Through the use of morphology we have only kept the important parts of the crop rows and erased all the extrenuous leaves and weeds. By using opening and closing techniques we were able to have a simpler more concentrated image of our crop rows.
 
 # Rotating the Image
 
 ```{r}
+par(mar = rep(2,4))
 rotations_list <- rotations(img_blob, 90) 
 
 plot(rotations_list)

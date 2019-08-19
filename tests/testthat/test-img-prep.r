@@ -7,7 +7,7 @@ library(dplyr)
 library(reshape2)
 library(EBImage)
 
-img <- load.image('crop.row.finder/images/before_row.JPG')
+img <- load.image('crop.row.finder/inst/images/before_row.JPG')
 
 img_grayscale <- make_ExG(img)
 
