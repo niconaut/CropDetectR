@@ -1,4 +1,4 @@
-# crop.row.finder: a crop row detection package
+# CropDectectR: a crop row detection package
 
 ## Introduction
 

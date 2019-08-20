@@ -1,4 +1,4 @@
 library(testthat)
-library(crop.row.finder)
+library(CropDetectR)
 
-test_check("crop.row.finder")
+test_check("CropDectectR")

@@ -1,5 +1,5 @@
 ---
-title: "detecting-crop-rows"
+title: "CropDetectR"
 author: "Nicolaas VanSteenbergen"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, message=F, warning=F}
-library(crop.row.finder)
+devtools::load_all()
+library(CropDetectR)
 library(imager)
 library(magick)
 library(ggplot2)
@@ -122,3 +123,12 @@ abline(v = crop_rows, col = "red", lwd = 1.5)
 ```
 
 This final step uses the best image we previously found as well as the maximas and minimas that passed the *good ratio* test discussed earlier. When finding the crop row centers we are only concerned with the maximas since they are the peaks, which correlates to the center of the crop rows. The minimas are the center of the spaces between the crops, which are not a concern to us. As seen previously we used a ratio to find the amount of good ratios for each image. With this final step, we use that known best image but apply a much more lienent ratio to it. This will capture less pronounced crop rows that may have not passed the *good ratio* test. While this number is also arbitrary, ~ 0.05 works well for many crop row images.
+
+---
+Citations
+
+[1]
+
+[2]
+
+[3]

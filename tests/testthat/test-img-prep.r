@@ -1,5 +1,5 @@
 context("Image ExG and Binarization")
-library(crop.row.finder)
+library(CropDetectR)
 library(imager)
 library(magick)
 library(ggplot2)
@@ -7,7 +7,7 @@ library(dplyr)
 library(reshape2)
 library(EBImage)
 
-img <- load.image('crop.row.finder/inst/images/before_row.JPG')
+img <- load.image('https://upload.wikimedia.org/wikipedia/commons/3/3b/Crop_Rows_-_geograph.org.uk_-_656084.jpg')
 
 img_grayscale <- make_ExG(img)
 
