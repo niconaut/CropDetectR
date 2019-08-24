@@ -9,7 +9,7 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.1.0)
-License: GPL-2
+License: GPL
 BugReports: https://github.com/niconaut
 Encoding: UTF-8
 LazyData: true
