@@ -7,21 +7,21 @@ Authors@R:
            role = c("aut", "cre"),
            email = "nvansteenbergen@unomaha.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: CropDetectR aids in the indentification/discovery of crop rows.
 Depends: R (>= 3.1.0)
-License: GPL
+License: GPL-3
+LICENSE: GPL-3
 BugReports: https://github.com/niconaut
 Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
     imager,
-    magick,
-    ggplot2,
     reshape2,
     EBImage
 Suggests: 
     knitr,
+    ggplot2,
     rmarkdown,
     testthat
 VignetteBuilder: knitr

@@ -1,4 +1,4 @@
 library(testthat)
 library(CropDetectR)
 
-test_check("CropDectectR")
+test_check("CropDetectR")

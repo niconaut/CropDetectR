@@ -1,5 +1,14 @@
-^crop\.row\.finder\.Rproj$
+^CropDetectR.Rproj$
 ^\.Rproj\.user$
 images
 citing.txt
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^.*\.Rproj$
+license_output_statement.txt
+.gitignore
+.RData
+.RHistory
+README.md
