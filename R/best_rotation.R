@@ -19,10 +19,7 @@
 #'
 #' @return The index of the image with the most \emph{good ratios} (ratios that exceed the given threshold).
 #'
-#' @example
-#' \donttest{
-#' best_image <- best_rotation(picture_list, 0.5, 0.25)
-#' }
+#' @examples \donttest{best_image <- best_rotation(picture_list, 0.5, 0.25)}
 #'
 #' @export
 

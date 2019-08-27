@@ -5,7 +5,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{detecting-crop-rows}
-  %\Vigdenitr::rmarkdown}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -19,13 +19,15 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, message=F, warning=F}
-devtools::load_all()
+# devtools::load_all()
 library(CropDetectR)
 library(imager)
 library(ggplot2)
 library(dplyr)
 library(reshape2)
 library(EBImage)
+
+library(stats)
 ```
 
 # Grayscale using ExG

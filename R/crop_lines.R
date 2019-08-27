@@ -14,10 +14,7 @@
 #'
 #' @return A vector of x-axis values for a given image.
 #'
-#' @example
-#' \donttest{
-#' crop_positions <- crop_lines(picture_list, 0.5, best_image, 0.25)
-#' }
+#' @examples \donttest{crop_positions <- crop_lines(picture_list, 0.5, best_image, 0.25)}
 #'
 #' @export
 

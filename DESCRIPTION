@@ -9,8 +9,7 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: CropDetectR aids in the indentification/discovery of crop rows.
 Depends: R (>= 3.1.0)
-License: GPL-3
-LICENSE: GPL-3
+License: GPL-3 + file LICENSE
 BugReports: https://github.com/niconaut
 Encoding: UTF-8
 LazyData: true
@@ -18,7 +17,8 @@ Imports:
     dplyr,
     imager,
     reshape2,
-    EBImage
+    EBImage,
+    stats
 Suggests: 
     knitr,
     ggplot2,

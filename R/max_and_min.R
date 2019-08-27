@@ -6,10 +6,7 @@
 #'
 #' @return A list of local maximas in the vector
 #'
-#' @example
-#' \donttest{
-#' maximas <- localMaxima(smoothed_vector)
-#' }
+#' @examples \donttest{maximas <- localMaxima(x)}
 #'
 #' @export
 
@@ -33,10 +30,7 @@ localMaxima <- function(x) {
 #'
 #' @return A list of local minimas in the vector
 #'
-#' @example
-#' \donttest{
-#' minimas <- localMinima(smoothed_vector)
-#' }
+#' @examples \donttest{minimas <- localMinima(x)}
 #'
 #' @export
 

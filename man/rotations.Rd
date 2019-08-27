@@ -20,3 +20,7 @@ Takes an image and rotates it by a number of degrees choosen by the user.
 \details{
 The function takes in an image and rotates it by a number of degrees chosen by the user. It will keep rotating until it has reached the 360 degree limit and save the images into a list.
 }
+\examples{
+\donttest{picture_list <- rotations(picture, 45)}
+
+}

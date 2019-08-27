@@ -15,3 +15,7 @@ A list of local maximas in the vector
 \description{
 Takes in a vector and finds the local maximas.  (Credit user Tommy https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima).
 }
+\examples{
+\donttest{maximas <- localMaxima(x)}
+
+}

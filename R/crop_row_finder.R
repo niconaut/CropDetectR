@@ -14,10 +14,7 @@
 #'
 #' @return a list of x coordinates for the image on which the function was applied.
 #'
-#' @example
-#' \donttest{
-#' crop_rows <- crop_row_finder(picture_list, ratio, final_ratio, intensity)
-#' }
+#' @examples \donttest{crop_rows <- crop_row_finder(picture_list, 0.5, 0.05, 0.25)}
 #'
 #' @export
 

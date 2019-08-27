@@ -4,14 +4,21 @@
 #'
 #' The function first reads the image as a data frame with x and y columns for the pixel postion. Reading the data frame as "wide = 'c'" also creates a column for red, green, and blue intensity. Each color column is then normalized and the normal values of the colors are put into the ExG equation, creating a new ExG column for each pixel. The values of the ExG are then treated as a 1D array and transformed into a format for the EBImage package commands.
 #'
+#' @importFrom dplyr %>%
+#' @importFrom dplyr mutate
+#' @importFrom dplyr select
+#' @importFrom dplyr summarise
+#' @importFrom dplyr group_by
+#' @importFrom reshape2 melt
+#' @importFrom stats na.omit
+#' @importFrom EBImage Image
+#'
+#'
 #' @param color_image The image to have ExG applied to it
 #'
 #' @return An image formatted for EBImage commands.
 #'
-#' @example
-#' \donttest{
-#' grayscale <- make_ExG(crop_rows)
-#' }
+#' @examples \donttest{grayscale <- make_ExG(color_image)}
 #'
 #' @export
 

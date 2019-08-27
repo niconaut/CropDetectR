@@ -29,3 +29,7 @@ Then the ratio between neighbor local minima and maxima are calculated and compa
 a threshold given by the user. If the found ratio is larger than the threshold the ratio
 is counted.
 }
+\examples{
+\donttest{best_image <- best_rotation(picture_list, 0.5, 0.25)}
+
+}

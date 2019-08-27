@@ -24,3 +24,7 @@ Finds the x coordinates of the crop rows in the image.
 \details{
 This function is a combination of two previous functions \code{\link{best_rotation}} and \code{\link{crop_lines}} to find the best rotation and then map out the x coordinates of the crop rows in the image.
 }
+\examples{
+\donttest{crop_rows <- crop_row_finder(picture_list, 0.5, 0.05, 0.25)}
+
+}

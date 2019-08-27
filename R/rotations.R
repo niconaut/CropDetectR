@@ -4,16 +4,16 @@
 #'
 #' The function takes in an image and rotates it by a number of degrees chosen by the user. It will keep rotating until it has reached the 360 degree limit and save the images into a list.
 #'
+#' @importFrom imager ci
+#' @importFrom imager imrotate
+#'
 #' @param picture The image to be rotated.
 #'
 #' @param degrees The degrees of rotation until 180 (30 = every 30 degrees).
 #'
 #' @return A list of pictures that have been rotated by x degrees each.
 #'
-#' @example
-#' \donttest{
-#' picture_list <- rotations(picture, 45)
-#' }
+#' @examples \donttest{picture_list <- rotations(picture, 45)}
 #'
 #' @export
 

@@ -17,3 +17,10 @@ A smoothed vector.
 \description{
 Reads in an image and takes the average column value then smooths the array for more defined local maximas and minimas.
 }
+\details{
+The function reads in an image as a data frame then takes the mean of each column within the picture. Since the image is binary the mean will have a value between [0,1], with one being all white. It then uses \url{https://www.rdocumentation.org/packages/stats/versions/3.6.1/topics/smooth.spline} smooth.spline to get rid of jagged portions for more defined local maximas and minimas.
+}
+\examples{
+\donttest{smoothed_vector <- smoothing(picture, intensity)}
+
+}

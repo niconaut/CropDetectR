@@ -24,3 +24,7 @@ Finds the crop row lines of an image. It uses other functions in the package suc
 \details{
 This function takes in: one or more images, a ratio that will become the threshold of what qualifies as a crop row, the index from \code{\link{best_rotation}} of what the best image was, and the intensity of smoothening from \code{\link{smoothing}}. It then uses the ratio as the threshold for acceptable crop rows and makes a list of the x-axis values.
 }
+\examples{
+\donttest{crop_positions <- crop_lines(picture_list, 0.5, best_image, 0.25)}
+
+}
