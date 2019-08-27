@@ -5,12 +5,11 @@ Authors@R:
     person(given = "Nicolaas",
            family = "VanSteenbergen",
            role = c("aut", "cre"),
-           email = "nvansteenbergen@unomaha.edu",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "nvansteenbergen@unomaha.edu"
 Description: CropDetectR aids in the indentification/discovery of crop rows.
 Depends: R (>= 3.1.0)
 License: GPL-3 + file LICENSE
-BugReports: https://github.com/niconaut
+BugReports: https://github.com/niconaut/CropDetectR/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
