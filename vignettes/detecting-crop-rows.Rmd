@@ -26,14 +26,13 @@ library(ggplot2)
 library(dplyr)
 library(reshape2)
 library(EBImage)
-
 library(stats)
 ```
 
 # Grayscale using ExG
 
 ```{r}
-img <- load.image('C:/Users/Nico/Desktop/UNOwork/img_26.JPG')
+img <- load.image('https://raw.githubusercontent.com/niconaut/CropDetectR/master/images/before_rows.JPG')
 ```
 
 Loading the image using the *imager* loading function to prepare it for the ExG process.
