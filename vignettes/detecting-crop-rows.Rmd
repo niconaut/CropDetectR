@@ -32,10 +32,11 @@ library(stats)
 # Grayscale using ExG
 
 ```{r}
-img <- load.image('https://raw.githubusercontent.com/niconaut/CropDetectR/master/images/before_rows.JPG')
+img <- readImage('https://raw.githubusercontent.com/niconaut/CropDetectR/master/images/before_rows.jpeg')
+img <- as.cimg(img[1:length(img)], dim = c(dim(img)[1], dim(img)[2], 1, dim(img)[3]))
 ```
 
-Loading the image using the *imager* loading function to prepare it for the ExG process.
+Loading the image using the *EBImage* loading function then change it to *imager* format to prepare it for the ExG process.
 
 ```{r}
 img_grayscale <- make_ExG(img)
