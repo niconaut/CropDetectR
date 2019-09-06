@@ -19,7 +19,6 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, message=F, warning=F}
-# devtools::load_all()
 library(CropDetectR)
 library(imager)
 library(ggplot2)
@@ -49,7 +48,7 @@ plot(img_grayscale)
 
 # Otsu Transformation
 
-Using the Otsu method of image thresholding we are able to capture only the plant material as white (value of 1) and the rest of the non-organic material is black (value of 0). This will be very benficial for the next steps because a binary image is needed.
+Using the Otsu method of image thresholding, we are able to capture only the plant material as white (value of 1) and the rest of the non-organic material as black (value of 0). This will be helpful for the next steps because a binary image is needed.
 
 ```{r}
 black_white <- make_bw(img_grayscale)
@@ -59,7 +58,7 @@ plot(black_white)
 
 # Morphology
 
-Through the use of morphology we have only kept the important parts of the crop rows and erased all the extrenuous leaves and weeds. By using opening and closing techniques we were able to have a simpler more concentrated image of our crop rows.
+Through the use of morphology we have only kept the important parts of the crop rows and erased all the extrenuous leaves and weeds. By using opening and closing techniques we were able to have a simpler, more concentrated image of our crop rows.
 
 ```{r}
 img_blob <- blobify(black_white, 3) # min input value of 1
@@ -69,7 +68,7 @@ plot(img_blob)
 
 # Rotating the Image
 
-Performing simple image rotations will allow us to find out the best degree of rotation to get the crop rows vertical. In this example we are rotating the image every 45 degrees to check if there is a better angle other than its base. It is important that they are vertical for the next few steps which will be explained in the next section.
+Performing simple image rotations will allow us to find out the best degree of rotation to get the crop rows vertical. In this example we are rotating the image every 45 degrees to check if there is a better angle other than its base. It is important that they are vertical for the next few steps.
 
 ```{r}
 par(mar = rep(2,4))
@@ -80,7 +79,7 @@ plot(rotations_list)
 
 # Smoothening the images
 
-Making the images smoother is necessary when we are trying to find true local minimas and maximas. If the image is very sparatic and jagged identifying the locals will be a tough challenge since there is a lot of up and down change. As we see in the smoothed image, there are only a few locals and in the next steps we can use a ratio to ignore the smaller maximas and minimas, leaving us with only the very pronounced ones.
+Making the images smoother is necessary when we are trying to find true local minimas and maximas. If the image is very sparatic and jagged, identifying the locals will be a tough challenge since there is a lot of up and down change. As we see in the smoothed image, there are only a few locals. In the next steps, we can use a ratio to ignore the smaller maximas and minimas, leaving us with only the very pronounced ones.
 
 ```{r}
 jagged <- as.data.frame(rotations_list[1]) %>%
@@ -111,7 +110,7 @@ plot(smoothing(rotations_list[best_img], 0.25), type = 'l')
 
 # Finding the crop row lines
 
-This final step uses the best image we previously found as well as the maximas and minimas that passed the *good ratio* test discussed earlier. When finding the crop row centers we are only concerned with the maximas since they are the peaks, which correlates to the center of the crop rows. The minimas are the center of the spaces between the crops, which are not a concern to us. As seen previously we used a ratio to find the amount of good ratios for each image. With this final step, we use that known best image but apply a much more lienent ratio to it. This will capture less pronounced crop rows that may have not passed the *good ratio* test. While this number is also arbitrary, ~ 0.05 works well for many crop row images.
+This final step uses the best image we previously found, as well as the maximas and minimas that passed the *good ratio* test discussed earlier. When finding the crop row centers, we are only concerned with the maximas since they are the peaks. This correlates to the center of the crop rows. The minimas are the center of the spaces between the crops, which are not a concern to us. As seen previously, we used a ratio to find the amount of good ratios for each image. With this final step, we use that known best image but apply a much more lienent ratio to it. This will capture less pronounced crop rows that may have not passed the *good ratio* test. While this number is also arbitrary, ~ 0.05 works well for many crop row images.
 
 ```{r}
 picture_list <- rotations_list
