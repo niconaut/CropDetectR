@@ -71,10 +71,14 @@ plot(img_blob)
 Performing simple image rotations will allow us to find out the best degree of rotation to get the crop rows vertical. In this example we are rotating the image every 45 degrees to check if there is a better angle other than its base. It is important that they are vertical for the next few steps.
 
 ```{r}
+oldpar <- par(mfrow = c(1,2))
+
 par(mar = rep(2,4))
 rotations_list <- rotations(img_blob, 90) 
 
 plot(rotations_list)
+
+par(oldpar)
 ```
 
 # Smoothening the images
