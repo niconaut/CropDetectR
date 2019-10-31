@@ -1,0 +1,538 @@
+---
+title: "GITHUB FILE"
+author: "Nicolaas"
+date: "9/16/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning=F, message=F}
+library(imager)
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(EBImage)
+library(stats)
+library(magick)
+```
+
+```{r}
+make_ExG <- function(color_image) {
+
+  df_field <- as.data.frame(color_image, wide="c")
+
+  df_field <- df_field %>%
+    mutate(r_small = c.1/(c.1 + c.2 + c.3)) %>%
+    mutate(g_small = c.2/(c.1 + c.2 + c.3)) %>%
+    mutate(b_small = c.3/(c.1 + c.2 + c.3))
+
+  df_field <- df_field %>%
+    mutate(ExG = 2*g_small - r_small - b_small)
+
+  df_bw <- df_field %>%
+    dplyr::select(c("x","y","ExG"))
+
+  df_bw <- melt(df_bw, id = c("x","y"))
+
+  names(df_bw)[3] <- "cc"
+
+  df_bw <- na.omit(df_bw)
+
+  df_bw$cc <- as.integer(df_bw$cc)
+
+  df_bw <- Image(df_bw$value, dim = c(max(df_bw$x),max(df_bw$y)), colormode = 'Grayscale')
+
+  return(df_bw)
+}
+
+
+
+make_bw <- function(image){
+
+  BW <- image > otsu(image, range = c(max(image),min(image)))
+  return(BW)
+}
+
+
+
+blobify <- function(image, size) {
+
+  kern3 <- makeBrush(size, shape = 'box')
+  open1 <- opening(image, kern3)
+
+  close1 <- closing(open1, kern3)
+
+  kern4 <- makeBrush(size + 2, shape = 'box')
+  open2 <- opening(close1, kern4)
+
+  close2 <- closing(open2, kern3)
+
+  open3 <- opening(close2, kern4)
+
+  close3 <- closing(open3, kern4)
+
+  final_blob <- EBImage::dilate(close3, kern3)
+  final_blob_cimg <- as.cimg(final_blob[1:length(final_blob)], dim = c(dim(final_blob)[1], dim(final_blob)[2]))
+
+  return(final_blob_cimg)
+}
+
+
+
+rotations <- function(picture, degrees) {
+
+  new_deg <- 0
+  rotated <- imrotate(picture, new_deg)
+  picture_list <- rotated
+  # rotation_list <- paste('rotated_',new_deg,sep = "")
+
+  while (new_deg < (360 - degrees)) {
+    new_deg <- new_deg + degrees
+    rotated <- imrotate(picture, new_deg)
+    picture_list <- ci(picture_list, rotated)
+    # rotation_list <- append(rotation_list, paste('rotated_', new_deg, sep = ""))
+  }
+  # return(rotation_list)
+  return(picture_list)
+}
+
+
+
+smoothing <- function(picture, intensity) {
+
+  BW_df <- as.data.frame(picture) %>%
+    select(x, y, value) %>%
+    group_by(x) %>%
+    summarise(row_threshold = mean(value))
+
+  y <- as.array(BW_df$row_threshold)
+  smoothed <- smooth.spline(BW_df$x,y,spar = intensity)
+  y_smooth <- smoothed$y
+  return(y_smooth)
+}
+
+
+
+localMaxima <- function(x) {
+  # Use Inf instead if x is numeric (non-integer)
+  y <- diff(c(-.Machine$integer.max, x)) > 0L
+  rle(y)$lengths
+  y <- cumsum(rle(y)$lengths)
+  y <- y[seq.int(1L, length(y), 2L)]
+  if (x[[1]] == x[[2]]) {
+    y <- y[-1]
+  }
+  y
+}
+
+
+
+localMinima <- function(x) {
+  # Use Inf instead if x is numeric (non-integer)
+  y <- diff(c(.Machine$integer.max, x)) > 0L
+  rle(y)$lengths
+  y <- cumsum(rle(y)$lengths)
+  y <- y[seq.int(1L, length(y), 2L)]
+  if (x[[1]] == x[[2]]) {
+    y <- y[-1]
+  }
+  y
+}
+
+
+
+best_rotation <- function(picture_list, ratio, intensity) {
+
+  good_ratios <- NULL
+
+  for (i in 1:length(picture_list)) {
+
+    y_smooth <- smoothing(picture_list[i], intensity)
+    peaks <- localMaxima(y_smooth)
+    valleys <- localMinima(y_smooth)
+
+    crop_rows <- NULL
+
+    for (i in 1:length(peaks)) {
+      right_ratio <- round(abs((y_smooth[peaks[i]]-y_smooth[min(valleys[valleys >= peaks[i]])])/(max(y_smooth))),5)
+      left_ratio <- round(abs((y_smooth[peaks[i]]-y_smooth[max(valleys[valleys <= peaks[i]])])/(max(y_smooth))),5)
+
+      if ((!is.na(left_ratio) & !is.na(right_ratio)) & (left_ratio > (ratio) & right_ratio > (ratio))) {
+        crop_rows[i] <- peaks[i]
+      }
+    }
+    good_ratios <- c(good_ratios,length(na.omit(crop_rows)))
+  }
+  return(which.max(good_ratios))
+}
+
+
+
+crop_lines <- function(picture_list, final_ratio, best_image, intensity) {
+
+  crop_ratios <- NULL
+
+  for (i in 1:length(picture_list)) {
+
+    crop_smooth <- smoothing(picture_list[which.max(best_image)], intensity)
+    peaks <- localMaxima(crop_smooth)
+    valleys <- localMinima(crop_smooth)
+
+    crop_lines <- NULL
+
+    for (i in 1:length(peaks)) {
+
+      right_ratio <- round(abs((crop_smooth[peaks[i]]-crop_smooth[min(valleys[valleys >= peaks[i]])])/(max(crop_smooth))),5)
+      left_ratio <- round(abs((crop_smooth[peaks[i]]-crop_smooth[max(valleys[valleys <= peaks[i]])])/(max(crop_smooth))),5)
+
+      if ((!is.na(left_ratio) & !is.na(right_ratio)) & (left_ratio > (final_ratio) & right_ratio > (final_ratio))) {
+        crop_lines[i] <- peaks[i]
+      }
+    }
+    crop_ratios <- c(crop_ratios,length(na.omit(crop_lines)))
+  }
+  return(na.omit(crop_lines))
+}
+
+
+
+crop_row_finder <- function(picture_list, ratio, final_ratio, intensity) {
+
+  best_image <- best_rotation(picture_list, ratio, intensity)
+
+  crop_rows <- crop_lines(picture_list, final_ratio, best_image, intensity)
+
+  return(crop_rows)
+}
+```
+
+Functions Beyond Crop Row Detection
+
+```{r}
+# x axis strips from image
+vertical_strips <- function(rotations_list, best_img, intensity, crop_rows){
+  
+  smooth <- smoothing(rotations_list[best_img], intensity)
+  peaks <- localMaxima(smooth)
+  valleys <- localMinima(smooth)
+  
+  chunks <- NULL
+  
+  # establishing a chunk object
+  for (i in 1:length(crop_rows)) {
+    
+    middle <- crop_rows[i]
+    left_side <- max(valleys[valleys < crop_rows[i]])
+    right_side <- min(valleys[valleys > crop_rows[i]])
+  
+    chunks[[i]] <- c(left_side, middle, right_side)
+    
+  }
+  
+  # combining close chunks
+  for (i in 1:(length(chunks)-1)) {
+    if ((chunks[[i+1]][1] - chunks[[i]][3]) < 20) {
+      chunks[[i+1]][1] <- round(((chunks[[i+1]][1] + chunks[[i]][3])/2),0)
+      chunks[[i]][3] <- chunks[[i+1]][1]
+    }
+  }
+  return(chunks)
+}
+
+
+
+# position of vertical strip in image
+x_position <- function(chunks,base_image){
+  
+  position_x <- NULL
+  
+  for (i in 1:length(chunks)) {
+    if (chunks[[i]][2] < (dim(base_image)[1]/3)) {
+      position_x[i] <- "left"
+    } else if (chunks[[i]][2] > (dim(base_image)[1] - (dim(base_image)[1]/3))) {
+      position_x[i] <- "right"
+    } else {
+      position_x[i] <- "middle"
+    }
+  }
+  return(position_x)
+}
+
+
+
+# getting images of vertical strips for horizontal chops
+vertical_chunks <- function(image, chunks){
+  
+  i <- 1
+  chunk_img <- imsub(image, x %inr% c(chunks[[i]][1], chunks[[i]][3]))
+  chunk_list <- chunk_img
+  
+  while (i < (length(chunks))) {
+    i <- i + 1
+    chunk_img <- imsub(image, x %inr% c(chunks[[i]][1], chunks[[i]][3]))
+    chunk_list <- ci(chunk_list, chunk_img)
+  }
+  return(chunk_list)
+}
+
+
+
+# finding best spot to chop a vertical strip
+chop_spots <- function(chunk_list,image,break_sensitivity,min_length){
+  
+  chop_values <- NULL
+  
+  for (i in 1:length(chunk_list)){
+    
+    chunk_bw_rot <- imrotate(chunk_list[[i]], -90)
+    smooth_hrz <- smoothing(chunk_bw_rot, 0.4)
+    peaks_hrz <- localMaxima(smooth_hrz)
+    valleys_hrz <- localMinima(smooth_hrz)
+    good_valleys <- which(smooth_hrz[valleys_hrz] < break_sensitivity)
+    true_valleys_hrz <- valleys_hrz[good_valleys]
+    
+    if (length(true_valleys_hrz) <= 1) {
+      chop_values[[i]] <- as.integer(c(1,dim(image)[2])) 
+    } else {
+      chop_values[[i]] <- true_valleys_hrz
+    }
+  
+  chop_values[[i]] <- unique(chop_values[[i]]) 
+  
+  maxes <- NULL
+  
+  for (i in 1:length(chop_values)){
+    for (k in 1:(length(chop_values[[i]])-1)){
+      if (chop_values[[i]][k+1] - chop_values[[i]][k] > min_length){
+        maxes[k] <- max(smooth_hrz[chop_values[[i]][k]:chop_values[[i]][k+1]])
+      }  
+    }
+  }
+
+  maxes <- maxes[!is.na(maxes)]
+
+  if (max(smooth_hrz[1:chop_values[[i]][1]]) > mean(maxes)/2){
+    chop_values[[i]] <- c(1,chop_values[[i]])
+    chop_values[[i]] <- unique(chop_values[[i]])
+    }
+  
+  if (max(smooth_hrz[chop_values[[i]][length(chop_values[[i]])]:dim(image)[2]]) > mean(maxes)/2) {
+    chop_values[[i]] <- c(chop_values[[i]],dim(image)[2])
+    chop_values[[i]] <- unique(chop_values[[i]])
+    }
+  }
+  return(chop_values)
+}
+
+
+
+# position of chop in image
+y_position <- function(chop_values,image){
+  
+  position_y <- NULL
+  
+  for (i in 1:length(chop_values)) {
+    
+    sub_y <- NULL
+    
+    for (k in 1:(length(chop_values[[i]])-1)){
+      
+      if (((chop_values[[i]][k+1] + chop_values[[i]][k])/2) < (dim(image)[2]/3)) {
+      sub_y[k] <- "bottom" 
+      } else if (((chop_values[[i]][k+1] + chop_values[[i]][k])/2) > (dim(image)[2] - (dim(image)[2]/3))) {
+        sub_y[k] <- "top" 
+      } else {
+        sub_y[k] <- "middle" 
+      }
+    }
+  position_y[i] <- list(sub_y)
+  }
+  return(position_y)
+}
+
+
+
+# naming each strip --- deparse(substitute(image))
+chunk_names <- function(position_x,position_y,chop_values,chunks,number,min_length) {
+  
+  pic_names <- NULL
+  
+  for (i in 1:length(position_x)){
+    temp_names <- NULL
+    
+    for (k in 1:length(position_y[[i]])){
+      
+      if ((chop_values[[i]][k+1] - chop_values[[i]][k]) < min_length) { } 
+      else {
+      temp_names[k] <- paste("img_",number,"_","chunk_",i,".",k,"_X_",position_x[i],"_Y_",position_y[[i]][k],"_HGT_",(chop_values[[i]][k+1] - chop_values[[i]][k]),"_WTH_",(chunks[[i]][3] - chunks[[i]][1]),sep = "")
+      }
+    }
+  pic_names[i] <- list(temp_names)
+  }
+  pic_names <- unlist(pic_names)[!is.na(unlist(pic_names))]
+  return(pic_names)
+}
+
+
+
+# making list of chopped images
+chopped_list <- function(image,chop_values,chunks){
+  
+  master_list <- image
+  
+  for (i in 1:length(chop_values)){
+    for (k in 1:(length(chop_values[[i]])-1)) {
+      chop_img <- imsub(image, x %inr% c(chunks[[i]][1],chunks[[i]][3]), y %inr% c(chop_values[[i]][k], chop_values[[i]][k+1]))
+      master_list <- ci(master_list, chop_img)
+    }
+  }
+  return(master_list)
+}
+
+
+
+final_photos <- function(image,chopped_list,min_length){
+  
+  final <- image
+  
+  for (i in 1:length(master_list)) {
+    if (dim(master_list[[i]])[2] > min_length){
+      final <- ci(final,master_list[[i]])
+    }
+  }
+  
+  final <- final[3:length(final)]
+  return(final)
+}
+
+
+
+save_photos <- function(final_photos,pic_names,folder_name){
+  
+  for (i in 1:length(final_photos)) {
+    save.image(final_photos[[i]],paste("C:/Users/PATH/",folder_name,"/",pic_names[i],".png",sep = ""))
+  }
+  print("SAVED")
+}
+```
+
+Images
+
+```{r}
+#UAV
+UAV_list <- load.image("C:/Users/PATH/img_1.JPG")
+
+for (i in 2:43){
+  img <- load.image(paste("C:/Users/PATH/img_",i,".JPG",sep = ""))
+  UAV_list <- ci(UAV_list, img)
+}
+```
+
+Call Functions
+
+```{r,warning=F,message=F}
+# EXCLUDE BASE IMAGES 17,43,45,46
+for (j in 1:43){  
+  grayscale <- make_ExG(UAV_list[[j]])
+  
+  black_white <- make_bw(grayscale)
+  
+  bw_cimg <- as.cimg(black_white[1:length(black_white)], dim = c(dim(black_white)[1], dim(black_white)[2]))
+  
+  img_blob <- blobify(black_white,3)
+  
+  rotations_list <- rotations(img_blob, 90)
+  
+  best_img <- best_rotation(rotations_list, 0.5, 0.25)
+  
+  picture_list <- rotations_list
+  
+  crop_rows <- crop_row_finder(rotations_list, 0.5, 0.05, 0.25)
+  
+  png(paste("C:/Users/PATH/crop_lines/img_",j,".png",sep=""))
+  plot(UAV_list[[j]])
+  abline(v = crop_rows, col = "red")
+  dev.off()
+  
+  #```
+  #```{r}
+  # New Stuff
+  
+  chunks <- vertical_strips(rotations_list, best_img, 0.25, crop_rows)
+  
+  position_x <- x_position(chunks,bw_cimg)
+  
+  chunk_list <- vertical_chunks(bw_cimg, chunks)
+  
+  chop_values <- chop_spots(chunk_list,bw_cimg,0.05,160)
+  
+  position_y <- y_position(chop_values,bw_cimg)
+  
+  pic_names <- chunk_names(position_x,position_y,chop_values,chunks,j,160)
+  
+  master_list <- chopped_list(UAV_list[[j]],chop_values,chunks)
+  
+  final_pics <- final_photos(UAV_list[[j]],chopped_list,160)
+  
+  save_photos(final_pics,pic_names,"image_chunks_bw")
+  
+  #```
+  #```{r}
+  
+  xleft <- NULL
+  xright <- NULL
+  ybot <- NULL
+  ytop <- NULL
+  
+  for (i in 1:length(chunks)) {
+    xltemp <- NULL
+    xrtemp <- NULL
+    ybtemp <- NULL
+    yttemp <- NULL
+    
+    for (k in 1:length(chop_values[[i]])-1){
+      xltemp[k] <- chunks[[i]][1]
+      xrtemp[k] <- chunks[[i]][3]
+      ybtemp[k] <- chop_values[[i]][k]
+      yttemp[k] <- chop_values[[i]][k+1]
+    }
+    xleft <- c(xleft,xltemp)
+    xright <- c(xright,xrtemp)
+    ybot <- c(ybot,ybtemp)
+    ytop <- c(ytop,yttemp)
+  }
+  
+  final_left <- NULL
+  final_right <- NULL
+  final_bot <- NULL
+  final_top <- NULL
+  
+  for (i in 1:length(xleft)){
+    if (ytop[i]-ybot[i] > 160) {
+      final_left[i] <- xleft[i]
+      final_right[i] <- xright[i]
+      final_bot[i] <- ybot[i]
+      final_top[i] <- ytop[i]
+      }
+  }
+  
+  final_left <- final_left[!is.na(final_left)]
+  final_right <- final_right[!is.na(final_right)]
+  final_bot <- final_bot[!is.na(final_bot)]
+  final_top <- final_top[!is.na(final_top)]
+  
+  png(paste("C:/Users/PATH/img_",j,".png",sep=""))
+  plot(UAV_list[[j]])
+  rect(final_left, final_bot, final_right, final_top, border = TRUE,density = 0, col = "yellow")
+  dev.off()
+}
+```
+
+
+
+
+
+
