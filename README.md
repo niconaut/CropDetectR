@@ -24,6 +24,12 @@ After:
 
 <img src="images/after_rows.JPG" alt="before" width="70%" height="70%"/>
 
+Most Recent Work (cleaning up code for github)
+
+Isolating individual rows:
+
+<img src="images/individual_rows.JPG" alt="before" width="70%" height="70%"/>
+
 [1] Woebbecke et al., 1995
     D.M. Woebbecke, G.E. Meyer, K. Von Bargen, D.A. Mortensen
     Color indices for weed identification under various soil, residue, and lighting conditions
