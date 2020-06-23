@@ -1,5 +1,8 @@
 # CropDectectR: a crop row detection package
 
+## Important Update on 6/19/20! 
+A lot more has been researched since version 0.9000, around mid-July we will be adding more capabilities to the package that include: biomass identification with deep learning, GPS positioning, row matching and labeling throughout different images, and true distance apart for images in the same longitudinal line.
+
 ## Introduction
 
 crop.row.finder is a package developed to identify crop rows from a drone image. It uses techniques such as: **ExG** color transformation, **Otsu Transformation**, and **Morphology**.
